@@ -7,6 +7,8 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+
+	"github.com/kwelch/code-advent-2023/utils"
 )
 
 //go:embed input.txt
@@ -53,7 +55,7 @@ func part1(input string) int {
 		}
 	}
 
-	return sumValues(validGameIds)
+	return utils.SumValues(validGameIds)
 }
 
 func isGameValid(rawGameData string, cubes_max_values map[string]int) bool {
@@ -71,22 +73,6 @@ func isGameValid(rawGameData string, cubes_max_values map[string]int) bool {
 		}
 	}
 	return true
-}
-
-func sumValues(values []int) int {
-	var total int = 0
-	for _, value := range values {
-		total += value
-	}
-	return total
-}
-
-func powerValues(values []int) int {
-	var total int = 0
-	for _, value := range values {
-		total *= value
-	}
-	return total
 }
 
 func part2(input string) int {
@@ -122,5 +108,5 @@ func part2(input string) int {
 		powerPerSet = append(powerPerSet, gamePower)
 	}
 
-	return sumValues(powerPerSet)
+	return utils.SumValues(powerPerSet)
 }

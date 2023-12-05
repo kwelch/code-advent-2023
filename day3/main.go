@@ -7,6 +7,8 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+
+	"github.com/kwelch/code-advent-2023/utils"
 )
 
 //go:embed input.txt
@@ -47,27 +49,7 @@ func part1(input string) int {
 			}
 		}
 	}
-	return sumValues(foundNumbers)
-}
-
-func sumValues(values []int) int {
-	var total int = 0
-	for _, value := range values {
-		total += value
-	}
-	return total
-}
-
-func powerValues(values []int) int {
-	var total int = 0
-	for i, value := range values {
-		if i == 0 {
-			total = value
-			continue
-		}
-		total *= value
-	}
-	return total
+	return utils.SumValues(foundNumbers)
 }
 
 func getCharAt(lines []string, lineIndex int, charIndex int) byte {
@@ -116,7 +98,7 @@ func part2(input string) int {
 
 	for _, gearNumbers := range foundGears {
 		if len(gearNumbers) > 1 {
-			total += powerValues(gearNumbers)
+			total += utils.PowerValues(gearNumbers)
 		}
 	}
 	return total
