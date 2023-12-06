@@ -46,12 +46,12 @@ func Test_day4_part2(t *testing.T) {
 		{
 			name:  "example",
 			input: example,
-			want:  -1,
+			want:  30,
 		},
 		{
 			name:  "actual",
 			input: input,
-			want:  -1,
+			want:  5920640,
 		},
 	}
 	for _, tt := range tests {

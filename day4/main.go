@@ -70,5 +70,23 @@ func getMatches(winningNumbers []int, myNumbers []int) []int {
 }
 
 func part2(input string) int {
-	return 0
+	var playedCards = map[int]int{}
+	for index, line := range strings.Split(input, "\n") {
+		var cardData = strings.Split(line, ":")[1]
+		var cardId = index + 1
+		var copies = playedCards[cardId]
+		var cards = strings.Split(cardData, "|")
+		var winningNumbers = getMatches(utils.ParseNumbers(cards[0], " "), utils.ParseNumbers(cards[1], " "))
+		playedCards[cardId] += 1
+		for idx := range winningNumbers {
+			playedCards[cardId+(idx+1)] += copies + 1
+		}
+	}
+
+	fmt.Println(playedCards)
+	var total = 0
+	for _, wins := range playedCards {
+		total += wins
+	}
+	return total
 }
