@@ -19,3 +19,17 @@ func PowerValues(values []int) int {
 	}
 	return total
 }
+
+func LowestValue(values []int) int {
+	var lowest = 0
+	for i, value := range values {
+		if i == 0 {
+			lowest = value
+			continue
+		}
+		if value < lowest {
+			lowest = value
+		}
+	}
+	return lowest
+}
