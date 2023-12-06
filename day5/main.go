@@ -95,5 +95,43 @@ func findValueInMap(value int, mapOverrides [][]int) int {
 }
 
 func part2(input string) int {
+	var lines = strings.Split(input, "\n")
+	var seedsData = utils.ParseNumbers(strings.Split(lines[0], ":")[1], " ")
+
+	var maps = map[string][][]int{}
+	var mapRegEx = regexp.MustCompile(`^[a-z]+-to-([a-z]+) map:$`)
+	var currMap string
+	for _, line := range lines[1:] {
+		if line == "" {
+			continue
+		}
+		var matches = mapRegEx.FindStringSubmatch(line)
+		if matches == nil {
+			maps[currMap] = append(maps[currMap], utils.ParseNumbers(line, " "))
+		} else {
+			currMap = matches[1]
+
+			maps[currMap] = [][]int{}
+		}
+	}
+
+	var seedLocations = []int{}
+
+	for i := 0; i < len(seedsData); i += 2 {
+		var seedStart = seedsData[i]
+		var seedRange = seedsData[i+1]
+		var seedEnd = (seedStart + seedRange) - 1
+		fmt.Printf("seedStart: %v, seedRange: %v, seedEnd: %v\n", seedStart, seedRange, seedEnd)
+		for seedVal := seedStart; seedVal < seedEnd; seedVal++ {
+			var currValue = seedVal
+			for _, mapName := range mapOrder[1:] {
+				var mapOverrides = maps[mapName]
+				currValue = findValueInMap(currValue, mapOverrides)
+			}
+			seedLocations = append(seedLocations, currValue)
+		}
+	}
+
+	return utils.LowestValue(seedLocations)
 	return 0
 }
